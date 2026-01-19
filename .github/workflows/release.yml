@@ -4,10 +4,12 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write   # <-- REQUIRED to upload assets to a release
+
 jobs:
   build-and-attach:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,3 +23,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/cicd-demo.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
